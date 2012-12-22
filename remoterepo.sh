@@ -29,20 +29,20 @@ cd $1
 
 # Create a repo on the server
 
-echo -ne "Connecting to remote server...\n"
+echo -e "Connecting to remote server..."
 
 ssh -T -P"$SSH_PORT" "$SSH_SERVER" <<ENDSSH
 
   if [ ! -d "$GIT_PATH" ]
   then
-    echo -ne "Initializing remote repository...\n"
+    echo -e "Initializing remote repository..."
     mkdir -p $GIT_PATH
     cd $GIT_PATH
     git --bare init
   fi
 ENDSSH
 
-echo -ne "Initializing local repository...\n"
+echo -e "Initializing local repository..."
 
 if find . -maxdepth 0 -empty | read; 
 then
@@ -55,7 +55,7 @@ if  [ ! -d ".git" ]; then
   git commit -m "first commit" > /dev/null
 fi
 
-echo -ne "Syncing files...\n"
+echo -e "Syncing files..."
 
 # Finally do a first sync
 git remote add "$REMOTE_NAME" "$SSH_SERVER:$GIT_PATH" > /dev/null 2>&1
